@@ -24,9 +24,6 @@ const AddCommitteeModal = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     dispatch(addCommitteeAction(departmentId, title, description, member));
-    setTitle("");
-    setDescription("");
-    setMember([]);
   };
 
   useEffect(() => {
@@ -83,6 +80,7 @@ const AddCommitteeModal = () => {
               <div className="mb-3">
                 <label className="form-label">Select Members</label>
                 <Select
+                  defaultValue={member}
                   options={options}
                   isMulti
                   onChange={(e) => {

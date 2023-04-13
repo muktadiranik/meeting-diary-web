@@ -31,6 +31,9 @@ const UpdateCommiteeModal = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    if (member === updateCommittee?.member) {
+      setMember(updateCommittee?.member);
+    }
     dispatch(
       updateCommitteeAction(
         departmentId,
@@ -58,6 +61,7 @@ const UpdateCommiteeModal = () => {
   useEffect(() => {
     setTitle(updateCommittee?.title);
     setDescription(updateCommittee?.description);
+    setMember(updateCommittee?.member);
   }, [updateCommittee, members]);
 
   return (
