@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Departments from "./pages/Departments";
 import Committees from "./pages/Committees";
 import DepartmentDetails from "./pages/DepartmentDetails";
+import MeetingDetails from "./components/MeetingDetails";
 
 function App() {
   return (
@@ -35,6 +36,10 @@ function App() {
           <Route
             path="/departments/:departmentId/committees/:committeeId/"
             element={<Committees />}
+          />
+          <Route
+            path="/departments/:departmentId/committees/:committeeId/meetings/:meetingId"
+            element={<MeetingDetails />}
           />
         </Routes>
       </BrowserRouter>

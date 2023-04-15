@@ -8,7 +8,7 @@ const Department = ({ department }) => {
       <h2 className="card-header">{department?.title}</h2>
       <div className="card-body">
         {department?.description && (
-          <h5 className="card-title">{parse(department?.description)}</h5>
+          <div className="card-title">{parse(department?.description)}</div>
         )}
       </div>
       <div>

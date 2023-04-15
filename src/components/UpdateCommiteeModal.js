@@ -105,8 +105,7 @@ const UpdateCommiteeModal = () => {
                   onChange={setDescription}
                 />
               </div>
-              {console.log(options)}
-              {console.log(member)}
+
               <div className="mb-3">
                 <label className="form-label">Select Members</label>
                 {updateCommittee?.member && (

@@ -20,7 +20,14 @@ import {
   getUpdateMemberReducer,
   updateMemberReducer,
 } from "./redux/reducers/memberReducers";
-import { meetingsReducer as meetingReducer } from "./redux/reducers/meetingReducers";
+import {
+  allMeetingReducer,
+  addMeetingReducer,
+  meetingDetailsReducer,
+  deleteMeetingReducer,
+  getUpdateMeetingReducer,
+  updateMeetingReducer,
+} from "./redux/reducers/meetingReducers";
 
 const middleware = [thunk];
 
@@ -40,7 +47,12 @@ const store = configureStore({
     updateMemberReducer: updateMemberReducer,
     getUpdateCommitteeReducer: getUpdateCommitteeReducer,
     updateCommitteeReducer: updateCommitteeReducer,
-    meetingReducer: meetingReducer,
+    allMeetingReducer: allMeetingReducer,
+    addMeetingReducer: addMeetingReducer,
+    meetingDetailsReducer: meetingDetailsReducer,
+    deleteMeetingReducer: deleteMeetingReducer,
+    getUpdateMeetingReducer: getUpdateMeetingReducer,
+    updateMeetingReducer: updateMeetingReducer,
   },
   preloadedState: {
     authReducer: {
