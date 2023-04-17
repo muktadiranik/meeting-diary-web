@@ -142,6 +142,7 @@ export const updateMeetingReducer = (
     case UPDATE_MEETING_REQUEST:
       return {
         loading: true,
+        updatedMeeting: {},
       };
     case UPDATE_MEETING_SUCCESS:
       return {

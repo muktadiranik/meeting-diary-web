@@ -12,13 +12,21 @@ const MeetingList = () => {
 
   const { meetings } = useSelector((state) => state.allMeetingReducer);
   const { addedMeeting } = useSelector((state) => state.addMeetingReducer);
+  const { updatedMeeting } = useSelector((state) => state.updateMeetingReducer);
   const { deleteMeetingSuccess } = useSelector(
     (state) => state.deleteMeetingReducer
   );
 
   useEffect(() => {
     dispatch(getAllMeetingsAction(departmentId, committeeId));
-  }, [dispatch, departmentId, committeeId, addedMeeting, deleteMeetingSuccess]);
+  }, [
+    dispatch,
+    departmentId,
+    committeeId,
+    addedMeeting,
+    deleteMeetingSuccess,
+    updatedMeeting,
+  ]);
 
   return (
     <div>

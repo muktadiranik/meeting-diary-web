@@ -23,12 +23,12 @@ const Meeting = ({ meeting }) => {
   };
 
   return (
-    <div class="card mt-2 mb-2">
+    <div className="card mt-2 mb-2">
       <UpdateMeetingModal />
-      <h3 class="card-header">{meeting?.title}</h3>
-      <div class="card-body">
+      <h3 className="card-header">{meeting?.title}</h3>
+      <div className="card-body">
         {meeting?.description && (
-          <div class="card-title">{parse(meeting?.description)}</div>
+          <div className="card-title">{parse(meeting?.description)}</div>
         )}
         <div className=" card-footer">
           <div className=" btn btn-group">

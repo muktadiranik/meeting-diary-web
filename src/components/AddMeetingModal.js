@@ -78,43 +78,43 @@ const AddMeetingModal = () => {
                 aria-label="Close"></button>
             </div>
             <div className="modal-body">
-              <div class="mb-3">
-                <label class="form-label">Title</label>
+              <div className="mb-3">
+                <label className="form-label">Title</label>
                 <input
                   onChange={(e) => {
                     setTitle(e.target.value);
                   }}
                   value={title}
                   type="text"
-                  class="form-control"
+                  className="form-control"
                 />
               </div>
-              <div class="mb-3">
-                <label class="form-label">Description</label>
+              <div className="mb-3">
+                <label className="form-label">Description</label>
                 <ReactQuill
                   theme="snow"
                   value={description}
                   onChange={setDescription}
                 />
               </div>
-              <div class="mb-3">
-                <label class="form-label">Content</label>
+              <div className="mb-3">
+                <label className="form-label">Content</label>
                 <ReactQuill
                   theme="snow"
                   value={content}
                   onChange={setContent}
                 />
               </div>
-              <div class="mb-3">
-                <label class="form-label">Meeting Time</label>
+              <div className="mb-3">
+                <label className="form-label">Meeting Time</label>
                 <Datetime
                   onChange={(e) => {
                     setMeetingTime(e);
                   }}
                 />
               </div>
-              <div class="mb-3">
-                <label class="form-label">Invited Members</label>
+              <div className="mb-3">
+                <label className="form-label">Invited Members</label>
                 <Select
                   defaultValue={invitedMember}
                   options={options}

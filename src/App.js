@@ -22,7 +22,7 @@ function App() {
         pauseOnFocusLoss
         draggable
         pauseOnHover={false}
-        theme="light"
+        theme="dark"
       />
       <BrowserRouter>
         <Header />

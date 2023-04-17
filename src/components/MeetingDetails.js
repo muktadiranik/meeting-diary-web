@@ -23,7 +23,7 @@ const MeetingDetails = () => {
   }, [dispatch, departmentId, members]);
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" key={meeting?.id}>
       <div className="row pt-2">
         <div className="col-md-10">
           <h1>{meeting?.title}</h1>
