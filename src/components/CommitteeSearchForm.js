@@ -24,6 +24,9 @@ const CommitteeSearchForm = () => {
           placeholder="Search Committees"
           aria-label="Search"
           name="search_committee"
+          onChange={(e) => {
+            dispatch(getSearchCommitteesAction(departmentId, e.target.value));
+          }}
         />
         <button className="btn btn-outline-success" type="submit">
           <i className="fa-solid fa-magnifying-glass"></i>

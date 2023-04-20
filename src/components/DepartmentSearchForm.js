@@ -20,6 +20,9 @@ const DepartmentSearchForm = () => {
             placeholder="Search Departments"
             aria-label="Search"
             name="search_department"
+            onChange={(e) => {
+              dispatch(getSearchDepartmentsAction(e.target.value));
+            }}
           />
           <button className="btn btn-outline-success" type="submit">
             Search

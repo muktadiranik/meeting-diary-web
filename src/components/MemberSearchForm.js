@@ -24,6 +24,9 @@ const MemberSearchForm = () => {
           placeholder="Search Members"
           aria-label="Search"
           name="search_member"
+          onChange={(e) => {
+            dispatch(getSearchMembersAction(departmentId, e.target.value));
+          }}
         />
         <button className="btn btn-outline-success" type="submit">
           <i className="fa-solid fa-magnifying-glass"></i>

@@ -28,6 +28,11 @@ const MeetingSearchForm = () => {
           placeholder="Search Meetings"
           aria-label="Search"
           name="search_meeting"
+          onChange={(e) => {
+            dispatch(
+              getSearchMeetingsAction(departmentId, committeeId, e.target.value)
+            );
+          }}
         />
         <button className="btn btn-outline-success" type="submit">
           <i className="fa-solid fa-magnifying-glass"></i>
