@@ -15,6 +15,9 @@ import {
   UPDATE_MEMBER_REQUEST,
   UPDATE_MEMBER_SUCCESS,
   UPDATE_MEMBER_FAILED,
+  GET_SEARCH_MEMBERS_REQUEST,
+  GET_SEARCH_MEMBERS_SUCCESS,
+  GET_SEARCH_MEMBERS_FAILED,
 } from "../constants/memberConstants";
 import { toast } from "react-toastify";
 
@@ -41,6 +44,32 @@ export const getAllMembersAction =
       })
       .catch((error) => {
         dispatch({ type: GET_ALL_MEMBERS_FAILED, payload: error });
+      });
+  };
+
+export const getSearchMembersAction =
+  (departmentId, search) => async (dispatch, getState) => {
+    dispatch({ type: GET_SEARCH_MEMBERS_REQUEST });
+    const {
+      authReducer: { token },
+    } = getState();
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/departments/${departmentId}/members/?search=${search}`,
+        {
+          headers: {
+            Authorization: `token ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        dispatch({ type: GET_SEARCH_MEMBERS_SUCCESS, payload: data });
+      })
+      .catch((error) => {
+        dispatch({ type: GET_SEARCH_MEMBERS_FAILED, payload: error });
       });
   };
 

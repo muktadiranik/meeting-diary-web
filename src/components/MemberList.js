@@ -23,7 +23,7 @@ const MemberList = () => {
         </thead>
         <tbody>
           {members?.map((member) => (
-            <Member member={member} />
+            <Member key={member?.id} member={member} />
           ))}
         </tbody>
       </table>

@@ -14,6 +14,9 @@ import {
   UPDATE_MEMBER_REQUEST,
   UPDATE_MEMBER_SUCCESS,
   UPDATE_MEMBER_FAILED,
+  GET_SEARCH_MEMBERS_REQUEST,
+  GET_SEARCH_MEMBERS_SUCCESS,
+  GET_SEARCH_MEMBERS_FAILED,
 } from "../constants/memberConstants";
 
 export const AllMembersReducer = (state = { members: [] }, action) => {
@@ -23,6 +26,12 @@ export const AllMembersReducer = (state = { members: [] }, action) => {
     case GET_ALL_MEMBERS_SUCCESS:
       return { ...state, loading: false, members: action.payload };
     case GET_ALL_MEMBERS_FAILED:
+      return { ...state, loading: false, error: action.payload };
+    case GET_SEARCH_MEMBERS_REQUEST:
+      return { ...state, loading: true, members: [] };
+    case GET_SEARCH_MEMBERS_SUCCESS:
+      return { ...state, loading: false, members: action.payload };
+    case GET_SEARCH_MEMBERS_FAILED:
       return { ...state, loading: false, error: action.payload };
     default:
       return state;

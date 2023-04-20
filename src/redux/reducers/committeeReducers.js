@@ -18,6 +18,9 @@ import {
   UPDATE_COMMITTEE_REQUEST,
   UPDATE_COMMITTEE_SUCCESS,
   UPDATE_COMMITTEE_FAILED,
+  GET_SEARCH_COMMITTEES_REQUEST,
+  GET_SEARCH_COMMITTEES_SUCCESS,
+  GET_SEARCH_COMMITTEES_FAILED,
 } from "../constants/committeeConstants";
 
 export const committeeReducer = (state = { committee: {} }, action) => {
@@ -69,6 +72,12 @@ export const AllCommitteesReducer = (state = { committees: [] }, action) => {
     case GET_ALL_COMMITTEES_SUCCESS:
       return { ...state, loading: false, committees: action.payload };
     case GET_ALL_COMMITTEES_FAILED:
+      return { ...state, loading: false, error: action.payload };
+    case GET_SEARCH_COMMITTEES_REQUEST:
+      return { ...state, loading: true, committees: [] };
+    case GET_SEARCH_COMMITTEES_SUCCESS:
+      return { ...state, loading: false, committees: action.payload };
+    case GET_SEARCH_COMMITTEES_FAILED:
       return { ...state, loading: false, error: action.payload };
     default:
       return state;

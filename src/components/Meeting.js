@@ -23,7 +23,7 @@ const Meeting = ({ meeting }) => {
   };
 
   return (
-    <div className="card mt-2 mb-2">
+    <div className="card mt-2 mb-2" key={meeting?.id}>
       <UpdateMeetingModal />
       <h3 className="card-header">{meeting?.title}</h3>
       <div className="card-body">

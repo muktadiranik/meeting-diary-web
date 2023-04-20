@@ -1,11 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import parse from "html-react-parser";
-import {
-  deleteCommitteeAction,
-  getUpdateCommitteeAction,
-} from "../redux/actions/committeeActions";
-import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import UpdateCommiteeModal from "./UpdateCommiteeModal";
 import Committee from "./Committee";
 
@@ -16,7 +10,7 @@ const CommitteeList = () => {
     <div className=" card my-1 border-0">
       <UpdateCommiteeModal />
       {committees?.map((committee) => (
-        <Committee committee={committee} />
+        <Committee key={committee?.id} committee={committee} />
       ))}
     </div>
   );

@@ -19,6 +19,9 @@ import {
   UPDATE_MEETING_REQUEST,
   UPDATE_MEETING_SUCCESS,
   UPDATE_MEETING_FAILED,
+  GET_SEARCH_MEETINGS_REQUEST,
+  GET_SEARCH_MEETINGS_SUCCESS,
+  GET_SEARCH_MEETINGS_FAILED,
 } from "../constants/meetingConstants";
 import { toast } from "react-toastify";
 
@@ -47,6 +50,34 @@ export const getAllMeetingsAction =
       })
       .catch((error) => {
         dispatch({ type: GET_ALL_MEETINGS_FAILED, payload: error });
+      });
+  };
+
+export const getSearchMeetingsAction =
+  (departmentId, committeeId, search) => async (dispatch, getState) => {
+    dispatch({
+      type: GET_SEARCH_MEETINGS_REQUEST,
+    });
+    const {
+      authReducer: { token },
+    } = getState();
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/${committeeId}/meetings/?search=${search}`,
+        {
+          headers: {
+            Authorization: `token ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        dispatch({ type: GET_SEARCH_MEETINGS_SUCCESS, payload: data });
+      })
+      .catch((error) => {
+        dispatch({ type: GET_SEARCH_MEETINGS_FAILED, payload: error });
       });
   };
 

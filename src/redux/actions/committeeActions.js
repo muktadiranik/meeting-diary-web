@@ -19,6 +19,9 @@ import {
   UPDATE_COMMITTEE_SUCCESS,
   UPDATE_COMMITTEE_FAILED,
   GET_UPDATE_COMMITTEE_RESET,
+  GET_SEARCH_COMMITTEES_REQUEST,
+  GET_SEARCH_COMMITTEES_SUCCESS,
+  GET_SEARCH_COMMITTEES_FAILED,
 } from "../constants/committeeConstants";
 import { toast } from "react-toastify";
 
@@ -92,7 +95,6 @@ export const getAllCommitteesAction =
     const {
       authReducer: { token },
     } = getState();
-
     axios
       .get(
         `${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/`,
@@ -110,6 +112,31 @@ export const getAllCommitteesAction =
       })
       .catch((error) => {
         dispatch({ type: GET_ALL_COMMITTEES_FAILED, payload: error });
+      });
+  };
+export const getSearchCommitteesAction =
+  (departmentId, search) => async (dispatch, getState) => {
+    dispatch({ type: GET_SEARCH_COMMITTEES_REQUEST });
+    const {
+      authReducer: { token },
+    } = getState();
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/?search=${search}`,
+        {
+          headers: {
+            Authorization: `token ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        dispatch({ type: GET_SEARCH_COMMITTEES_SUCCESS, payload: data });
+      })
+      .catch((error) => {
+        dispatch({ type: GET_SEARCH_COMMITTEES_FAILED, payload: error });
       });
   };
 

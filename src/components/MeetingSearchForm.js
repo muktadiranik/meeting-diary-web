@@ -1,29 +1,33 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getSearchCommitteesAction } from "../redux/actions/committeeActions";
+import { getSearchMeetingsAction } from "../redux/actions/meetingActions";
 
-const CommitteeSearchForm = () => {
+const MeetingSearchForm = () => {
   const dispatch = useDispatch();
 
-  const { departmentId } = useParams();
+  const { departmentId, committeeId } = useParams();
 
-  const searchCommittee = (e) => {
+  const searchMeeting = (e) => {
     e.preventDefault();
     dispatch(
-      getSearchCommitteesAction(departmentId, e.target.search_committee.value)
+      getSearchMeetingsAction(
+        departmentId,
+        committeeId,
+        e.target.search_meeting.value
+      )
     );
   };
 
   return (
     <>
-      <form className="d-flex" method="get" onSubmit={searchCommittee}>
+      <form className="d-flex" method="get" onSubmit={searchMeeting}>
         <input
           className="form-control me-2"
           type="search"
-          placeholder="Search Committees"
+          placeholder="Search Meetings"
           aria-label="Search"
-          name="search_committee"
+          name="search_meeting"
         />
         <button className="btn btn-outline-success" type="submit">
           <i className="fa-solid fa-magnifying-glass"></i>
@@ -33,4 +37,4 @@ const CommitteeSearchForm = () => {
   );
 };
 
-export default CommitteeSearchForm;
+export default MeetingSearchForm;

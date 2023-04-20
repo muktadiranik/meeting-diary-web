@@ -18,6 +18,9 @@ import {
   UPDATE_MEETING_REQUEST,
   UPDATE_MEETING_SUCCESS,
   UPDATE_MEETING_FAILED,
+  GET_SEARCH_MEETINGS_REQUEST,
+  GET_SEARCH_MEETINGS_SUCCESS,
+  GET_SEARCH_MEETINGS_FAILED,
 } from "../constants/meetingConstants";
 
 export const allMeetingReducer = (state = { meetings: [] }, action) => {
@@ -33,6 +36,21 @@ export const allMeetingReducer = (state = { meetings: [] }, action) => {
         meetings: action.payload,
       };
     case GET_ALL_MEETINGS_FAILED:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case GET_SEARCH_MEETINGS_REQUEST:
+      return {
+        loading: true,
+        meetings: [],
+      };
+    case GET_SEARCH_MEETINGS_SUCCESS:
+      return {
+        loading: false,
+        meetings: action.payload,
+      };
+    case GET_SEARCH_MEETINGS_FAILED:
       return {
         loading: false,
         error: action.payload,

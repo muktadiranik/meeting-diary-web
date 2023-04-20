@@ -5,6 +5,9 @@ import {
   GET_DEPARTMENT_DETAILS_REQUEST,
   GET_DEPARTMENT_DETAILS_SUCCESS,
   GET_DEPARTMENT_DETAILS_FAILED,
+  GET_SEARCH_DEPARTMENTS_REQUEST,
+  GET_SEARCH_DEPARTMENTS_SUCCESS,
+  GET_SEARCH_DEPARTMENTS_FAILED,
 } from "../constants/departmentConstants";
 
 export const departmentReducer = (state = { departments: [] }, action) => {
@@ -14,6 +17,12 @@ export const departmentReducer = (state = { departments: [] }, action) => {
     case GET_ALL_DEPARTMENTS_SUCCESS:
       return { ...state, loading: false, departments: action.payload };
     case GET_ALL_DEPARTMENTS_FAILED:
+      return { ...state, loading: false, error: action.payload };
+    case GET_SEARCH_DEPARTMENTS_REQUEST:
+      return { ...state, loading: true, departments: [] };
+    case GET_SEARCH_DEPARTMENTS_SUCCESS:
+      return { ...state, loading: false, departments: action.payload };
+    case GET_SEARCH_DEPARTMENTS_FAILED:
       return { ...state, loading: false, error: action.payload };
     default:
       return state;

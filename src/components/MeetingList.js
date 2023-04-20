@@ -4,6 +4,7 @@ import { getAllMeetingsAction } from "../redux/actions/meetingActions";
 import { useParams } from "react-router-dom";
 import AddMeetingModal from "./AddMeetingModal";
 import Meeting from "./Meeting";
+import MeetingSearchForm from "./MeetingSearchForm";
 
 const MeetingList = () => {
   const dispatch = useDispatch();
@@ -37,18 +38,7 @@ const MeetingList = () => {
             <h1>Your Meetings</h1>
           </span>
           <div className="d-flex">
-            <form className="d-flex" method="get">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search Meetings"
-                aria-label="Search"
-                name="search_meeting"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </form>
+            <MeetingSearchForm />
             <button
               type="button"
               className=" btn btn-outline-success ms-2"

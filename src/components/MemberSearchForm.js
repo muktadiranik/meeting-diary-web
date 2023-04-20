@@ -1,9 +1,23 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getSearchMembersAction } from "../redux/actions/memberActions";
 
 const MemberSearchForm = () => {
+  const dispatch = useDispatch();
+
+  const { departmentId } = useParams();
+
+  const searchMember = (e) => {
+    e.preventDefault();
+    dispatch(
+      getSearchMembersAction(departmentId, e.target.search_member.value)
+    );
+  };
+
   return (
     <>
-      <form className="d-flex" method="get">
+      <form className="d-flex" method="get" onSubmit={searchMember}>
         <input
           className="form-control me-2"
           type="search"
