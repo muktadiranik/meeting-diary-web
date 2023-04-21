@@ -8,7 +8,7 @@ const MeetingSearchForm = () => {
 
   const { departmentId, committeeId } = useParams();
 
-  const searchMeeting = (e) => {
+  const searchMember = (e) => {
     e.preventDefault();
     dispatch(
       getSearchMeetingsAction(
@@ -18,10 +18,9 @@ const MeetingSearchForm = () => {
       )
     );
   };
-
   return (
     <>
-      <form className="d-flex" method="get" onSubmit={searchMeeting}>
+      <form className="d-flex" method="get" onSubmit={searchMember}>
         <input
           className="form-control me-2"
           type="search"
