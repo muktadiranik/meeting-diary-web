@@ -6,6 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
 import { removeAuthTokenAction } from "../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
+import SearchForm from "./SearchForm";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const Header = () => {
               <Nav.Link href="/">Sign In</Nav.Link>
             )}
           </Nav>
+          <SearchForm />
         </Navbar.Collapse>
       </Container>
     </Navbar>
