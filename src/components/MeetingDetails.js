@@ -52,7 +52,7 @@ const MeetingDetails = () => {
               <button className="btn btn-outline-success">
                 {" "}
                 <span>
-                  <i class="fa-solid fa-cloud-arrow-down"></i>
+                  <i className="fa-solid fa-cloud-arrow-down"></i>
                 </span>{" "}
                 Get PDF
               </button>
