@@ -8,6 +8,7 @@ import Departments from "./pages/Departments";
 import Committees from "./pages/Committees";
 import DepartmentDetails from "./pages/DepartmentDetails";
 import MeetingDetails from "./components/MeetingDetails";
+import Search from "./pages/Search";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
             path="/departments/:departmentId/committees/:committeeId/meetings/:meetingId"
             element={<MeetingDetails />}
           />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </BrowserRouter>
     </div>

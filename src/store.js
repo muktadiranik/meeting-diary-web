@@ -28,6 +28,7 @@ import {
   getUpdateMeetingReducer,
   updateMeetingReducer,
 } from "./redux/reducers/meetingReducers";
+import { searchResultReducer } from "./redux/reducers/searchReducers";
 
 const middleware = [thunk];
 
@@ -53,6 +54,7 @@ const store = configureStore({
     deleteMeetingReducer: deleteMeetingReducer,
     getUpdateMeetingReducer: getUpdateMeetingReducer,
     updateMeetingReducer: updateMeetingReducer,
+    searchResultReducer: searchResultReducer,
   },
   preloadedState: {
     authReducer: {

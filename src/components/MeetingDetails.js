@@ -76,9 +76,11 @@ const MeetingDetails = () => {
               <ul>
                 {meeting?.invited_member?.map((member) => {
                   return (
-                    <li key={member.id}>
-                      {members.find((m) => m.id === member)?.full_name}
-                    </li>
+                    <div key={member?.id}>
+                      <li key={member?.id}>
+                        {members.find((m) => m.id === member)?.full_name}
+                      </li>
+                    </div>
                   );
                 })}
               </ul>
