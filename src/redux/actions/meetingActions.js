@@ -25,197 +25,167 @@ import {
 } from "../constants/meetingConstants";
 import { toast } from "react-toastify";
 
-export const getAllMeetingsAction =
-  (departmentId, committeeId) => async (dispatch, getState) => {
-    dispatch({
-      type: GET_ALL_MEETINGS_REQUEST,
+export const getAllMeetingsAction = (departmentId, committeeId) => async (dispatch, getState) => {
+  dispatch({
+    type: GET_ALL_MEETINGS_REQUEST,
+  });
+  const {
+    authReducer: { token },
+  } = getState();
+  axios
+    .get(`${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/${committeeId}/meetings/`, {
+      headers: {
+        Authorization: `JWT ${token}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .then((data) => {
+      dispatch({ type: GET_ALL_MEETINGS_SUCCESS, payload: data });
+    })
+    .catch((error) => {
+      dispatch({ type: GET_ALL_MEETINGS_FAILED, payload: error });
     });
-    const {
-      authReducer: { token },
-    } = getState();
-    axios
-      .get(
+};
+
+export const getSearchMeetingsAction = (departmentId, committeeId, search) => async (dispatch, getState) => {
+  dispatch({
+    type: GET_SEARCH_MEETINGS_REQUEST,
+  });
+  const {
+    authReducer: { token },
+  } = getState();
+  axios
+    .get(`${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/${committeeId}/meetings/?search=${search}`, {
+      headers: {
+        Authorization: `JWT ${token}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .then((data) => {
+      dispatch({ type: GET_SEARCH_MEETINGS_SUCCESS, payload: data });
+    })
+    .catch((error) => {
+      dispatch({ type: GET_SEARCH_MEETINGS_FAILED, payload: error });
+    });
+};
+
+export const addMeetingAction = (departmentId, committeeId, title, description, content, meetingTime, invitedMember) => async (dispatch, getState) => {
+  dispatch({
+    type: ADD_MEETING_REQUEST,
+  });
+  const {
+    authReducer: { token },
+  } = getState();
+  toast
+    .promise(
+      axios.post(
         `${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/${committeeId}/meetings/`,
         {
-          headers: {
-            Authorization: `token ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        return response.data;
-      })
-      .then((data) => {
-        dispatch({ type: GET_ALL_MEETINGS_SUCCESS, payload: data });
-      })
-      .catch((error) => {
-        dispatch({ type: GET_ALL_MEETINGS_FAILED, payload: error });
-      });
-  };
-
-export const getSearchMeetingsAction =
-  (departmentId, committeeId, search) => async (dispatch, getState) => {
-    dispatch({
-      type: GET_SEARCH_MEETINGS_REQUEST,
-    });
-    const {
-      authReducer: { token },
-    } = getState();
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/${committeeId}/meetings/?search=${search}`,
+          title: title,
+          description: description,
+          content: content,
+          meeting_time: meetingTime,
+          invited_member: invitedMember,
+        },
         {
           headers: {
-            Authorization: `token ${token}`,
+            Authorization: `JWT ${token}`,
           },
         }
-      )
-      .then((response) => {
-        return response.data;
-      })
-      .then((data) => {
-        dispatch({ type: GET_SEARCH_MEETINGS_SUCCESS, payload: data });
-      })
-      .catch((error) => {
-        dispatch({ type: GET_SEARCH_MEETINGS_FAILED, payload: error });
-      });
-  };
-
-export const addMeetingAction =
-  (
-    departmentId,
-    committeeId,
-    title,
-    description,
-    content,
-    meetingTime,
-    invitedMember
-  ) =>
-  async (dispatch, getState) => {
-    dispatch({
-      type: ADD_MEETING_REQUEST,
+      ),
+      {
+        pending: "Adding Meeting...",
+        success: "Meeting Added Successfully",
+        error: "Error Adding Meeting",
+      }
+    )
+    .then((response) => {
+      dispatch({ type: ADD_MEETING_SUCCESS, payload: response.data });
+    })
+    .catch((error) => {
+      dispatch({ type: ADD_MEETING_FAILED, payload: error });
     });
-    const {
-      authReducer: { token },
-    } = getState();
-    toast
-      .promise(
-        axios.post(
-          `${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/${committeeId}/meetings/`,
-          {
-            title: title,
-            description: description,
-            content: content,
-            meeting_time: meetingTime,
-            invited_member: invitedMember,
-          },
-          {
-            headers: {
-              Authorization: `token ${token}`,
-            },
-          }
-        ),
-        {
-          pending: "Adding Meeting...",
-          success: "Meeting Added Successfully",
-          error: "Error Adding Meeting",
-        }
-      )
-      .then((response) => {
-        dispatch({ type: ADD_MEETING_SUCCESS, payload: response.data });
-      })
-      .catch((error) => {
-        dispatch({ type: ADD_MEETING_FAILED, payload: error });
-      });
-  };
+};
 
-export const getMeetingDetailsAction =
-  (departmentId, committeeId, meetingId) => async (dispatch, getState) => {
-    dispatch({
-      type: GET_MEETING_DETAILS_REQUEST,
+export const getMeetingDetailsAction = (departmentId, committeeId, meetingId) => async (dispatch, getState) => {
+  dispatch({
+    type: GET_MEETING_DETAILS_REQUEST,
+  });
+  const {
+    authReducer: { token },
+  } = getState();
+  axios
+    .get(`${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/${committeeId}/meetings/${meetingId}/`, {
+      headers: {
+        Authorization: `JWT ${token}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .then((data) => {
+      dispatch({ type: GET_MEETING_DETAILS_SUCCESS, payload: data });
+    })
+    .catch((error) => {
+      dispatch({ type: GET_MEETING_DETAILS_FAILED, payload: error });
     });
-    const {
-      authReducer: { token },
-    } = getState();
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/${committeeId}/meetings/${meetingId}/`,
-        {
-          headers: {
-            Authorization: `token ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        return response.data;
-      })
-      .then((data) => {
-        dispatch({ type: GET_MEETING_DETAILS_SUCCESS, payload: data });
-      })
-      .catch((error) => {
-        dispatch({ type: GET_MEETING_DETAILS_FAILED, payload: error });
-      });
-  };
+};
 
-export const deleteMeetingAction =
-  (departmentId, committeeId, meetingId) => async (dispatch, getState) => {
-    dispatch({
-      type: DELETE_MEETING_REQUEST,
+export const deleteMeetingAction = (departmentId, committeeId, meetingId) => async (dispatch, getState) => {
+  dispatch({
+    type: DELETE_MEETING_REQUEST,
+  });
+  const {
+    authReducer: { token },
+  } = getState();
+  toast
+    .promise(
+      axios.delete(`${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/${committeeId}/meetings/${meetingId}/`, {
+        headers: {
+          Authorization: `JWT ${token}`,
+        },
+      }),
+      {
+        pending: "Deleting Meeting...",
+        success: "Meeting Deleted Successfully",
+        error: "Error Deleting Meeting",
+      }
+    )
+    .then((response) => {
+      dispatch({ type: DELETE_MEETING_SUCCESS, payload: response.data });
+    })
+    .catch((error) => {
+      dispatch({ type: DELETE_MEETING_FAILED, payload: error });
     });
-    const {
-      authReducer: { token },
-    } = getState();
-    toast
-      .promise(
-        axios.delete(
-          `${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/${committeeId}/meetings/${meetingId}/`,
-          {
-            headers: {
-              Authorization: `token ${token}`,
-            },
-          }
-        ),
-        {
-          pending: "Deleting Meeting...",
-          success: "Meeting Deleted Successfully",
-          error: "Error Deleting Meeting",
-        }
-      )
-      .then((response) => {
-        dispatch({ type: DELETE_MEETING_SUCCESS, payload: response.data });
-      })
-      .catch((error) => {
-        dispatch({ type: DELETE_MEETING_FAILED, payload: error });
-      });
-  };
+};
 
-export const getUpdateMeetingAction =
-  (departmentId, committeeId, meetingId) => async (dispatch, getState) => {
-    dispatch({
-      type: GET_UPDATE_MEETING_REQUEST,
+export const getUpdateMeetingAction = (departmentId, committeeId, meetingId) => async (dispatch, getState) => {
+  dispatch({
+    type: GET_UPDATE_MEETING_REQUEST,
+  });
+  const {
+    authReducer: { token },
+  } = getState();
+  axios
+    .get(`${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/${committeeId}/meetings/${meetingId}/`, {
+      headers: {
+        Authorization: `JWT ${token}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .then((data) => {
+      dispatch({ type: GET_UPDATE_MEETING_SUCCESS, payload: data });
+    })
+    .catch((error) => {
+      dispatch({ type: GET_UPDATE_MEETING_FAILED, payload: error });
     });
-    const {
-      authReducer: { token },
-    } = getState();
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/${committeeId}/meetings/${meetingId}/`,
-        {
-          headers: {
-            Authorization: `token ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        return response.data;
-      })
-      .then((data) => {
-        dispatch({ type: GET_UPDATE_MEETING_SUCCESS, payload: data });
-      })
-      .catch((error) => {
-        dispatch({ type: GET_UPDATE_MEETING_FAILED, payload: error });
-      });
-  };
+};
 
 export const resetGetUpdateMeetingAction = () => async (dispatch) => {
   dispatch({
@@ -224,51 +194,40 @@ export const resetGetUpdateMeetingAction = () => async (dispatch) => {
   });
 };
 
-export const updateMeetingAction =
-  (
-    departmentId,
-    committeeId,
-    meetingId,
-    title,
-    description,
-    content,
-    meetingTime,
-    invitedMember
-  ) =>
-  async (dispatch, getState) => {
-    dispatch({
-      type: UPDATE_MEETING_REQUEST,
-    });
-    const {
-      authReducer: { token },
-    } = getState();
-    toast
-      .promise(
-        axios.put(
-          `${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/${committeeId}/meetings/${meetingId}/`,
-          {
-            title: title,
-            description: description,
-            content: content,
-            meeting_time: meetingTime,
-            invited_member: invitedMember,
-          },
-          {
-            headers: {
-              Authorization: `token ${token}`,
-            },
-          }
-        ),
+export const updateMeetingAction = (departmentId, committeeId, meetingId, title, description, content, meetingTime, invitedMember) => async (dispatch, getState) => {
+  dispatch({
+    type: UPDATE_MEETING_REQUEST,
+  });
+  const {
+    authReducer: { token },
+  } = getState();
+  toast
+    .promise(
+      axios.put(
+        `${process.env.REACT_APP_API_URL}/departments/${departmentId}/committees/${committeeId}/meetings/${meetingId}/`,
         {
-          pending: "Updating Meeting...",
-          success: "Meeting Updated Successfully",
-          error: "Error Updating Meeting",
+          title: title,
+          description: description,
+          content: content,
+          meeting_time: meetingTime,
+          invited_member: invitedMember,
+        },
+        {
+          headers: {
+            Authorization: `JWT ${token}`,
+          },
         }
-      )
-      .then((response) => {
-        dispatch({ type: UPDATE_MEETING_SUCCESS, payload: response.data });
-      })
-      .catch((error) => {
-        dispatch({ type: UPDATE_MEETING_FAILED, payload: error });
-      });
-  };
+      ),
+      {
+        pending: "Updating Meeting...",
+        success: "Meeting Updated Successfully",
+        error: "Error Updating Meeting",
+      }
+    )
+    .then((response) => {
+      dispatch({ type: UPDATE_MEETING_SUCCESS, payload: response.data });
+    })
+    .catch((error) => {
+      dispatch({ type: UPDATE_MEETING_FAILED, payload: error });
+    });
+};

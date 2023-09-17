@@ -16,11 +16,9 @@ export const getAuthTokenAction = (formData) => async (dispatch) => {
   dispatch({ type: GET_AUTH_TOKEN_REQUEST });
   toast
     .promise(
-      axios
-        .post(`${process.env.REACT_APP_API_URL}/auth/login/`, formData)
-        .then((response) => {
-          return response.data;
-        }),
+      axios.post(`${process.env.REACT_APP_API_URL}/auth/login/`, formData).then((response) => {
+        return response.data;
+      }),
       {
         pending: "Logging in...",
         success: "Logged in successfully",
@@ -28,8 +26,9 @@ export const getAuthTokenAction = (formData) => async (dispatch) => {
       }
     )
     .then((data) => {
-      dispatch({ type: GET_AUTH_TOKEN_SUCCESS, payload: data.key });
-      localStorage.setItem("key", data.key);
+      dispatch({ type: GET_AUTH_TOKEN_SUCCESS, payload: data.access_token });
+      localStorage.setItem("accessToken", data.access_token);
+      localStorage.setItem("refreshToken", data.refresh_token);
       dispatch(getUserDetailsAction());
     })
     .catch((error) => {
@@ -45,7 +44,7 @@ export const getUserDetailsAction = () => async (dispatch, getState) => {
   axios
     .get(`${process.env.REACT_APP_API_URL}/auth/user/`, {
       headers: {
-        Authorization: `token ${token}`,
+        Authorization: `JWT ${token}`,
       },
     })
     .then((response) => {
@@ -62,7 +61,9 @@ export const removeAuthTokenAction = () => async (dispatch) => {
   toast
     .promise(
       axios
-        .post(`${process.env.REACT_APP_API_URL}/auth/logout/`)
+        .post(`${process.env.REACT_APP_API_URL}/auth/logout/`, {
+          refresh: localStorage.getItem("refreshToken"),
+        })
         .then((response) => {
           return response.data;
         }),
@@ -74,7 +75,8 @@ export const removeAuthTokenAction = () => async (dispatch) => {
     )
     .then((data) => {
       dispatch({ type: REMOVE_AUTH_TOKEN_SUCCESS, payload: data });
-      localStorage.removeItem("key");
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
     })
     .catch((error) => {
       dispatch({ type: REMOVE_AUTH_TOKEN_FAILED, payload: error });
