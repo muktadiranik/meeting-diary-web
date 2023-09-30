@@ -1,33 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import { authReducer } from "./redux/reducers/authReducers";
-import {
-  departmentReducer,
-  departmentDetailsReducer,
-} from "./redux/reducers/departmentReducers";
-import {
-  committeeReducer,
-  addCommitteeReducer,
-  AllCommitteesReducer,
-  deleteCommitteeReducer,
-  getUpdateCommitteeReducer,
-  updateCommitteeReducer,
-} from "./redux/reducers/committeeReducers";
-import {
-  AllMembersReducer,
-  addMemberReducer,
-  deleteMemberReducer,
-  getUpdateMemberReducer,
-  updateMemberReducer,
-} from "./redux/reducers/memberReducers";
-import {
-  allMeetingReducer,
-  addMeetingReducer,
-  meetingDetailsReducer,
-  deleteMeetingReducer,
-  getUpdateMeetingReducer,
-  updateMeetingReducer,
-} from "./redux/reducers/meetingReducers";
+import { departmentReducer, departmentDetailsReducer } from "./redux/reducers/departmentReducers";
+import { committeeReducer, addCommitteeReducer, AllCommitteesReducer, deleteCommitteeReducer, getUpdateCommitteeReducer, updateCommitteeReducer } from "./redux/reducers/committeeReducers";
+import { AllMembersReducer, addMemberReducer, deleteMemberReducer, getUpdateMemberReducer, updateMemberReducer } from "./redux/reducers/memberReducers";
+import { allMeetingReducer, addMeetingReducer, meetingDetailsReducer, deleteMeetingReducer, getUpdateMeetingReducer, updateMeetingReducer } from "./redux/reducers/meetingReducers";
 import { searchResultReducer } from "./redux/reducers/searchReducers";
 
 const middleware = [thunk];
@@ -58,10 +35,8 @@ const store = configureStore({
   },
   preloadedState: {
     authReducer: {
-      token: localStorage.getItem("key") ? localStorage.getItem("key") : null,
-      user: localStorage.getItem("user")
-        ? JSON.parse(localStorage.getItem("user"))
-        : null,
+      token: localStorage.getItem("accessToken") ? localStorage.getItem("accessToken") : null,
+      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
     },
   },
   devTools: process.env.NODE_ENV !== "production",
