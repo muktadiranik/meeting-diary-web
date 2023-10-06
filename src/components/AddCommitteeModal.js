@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { addCommitteeAction } from "../redux/actions/committeeActions";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const AddCommitteeModal = () => {
   const [title, setTitle] = useState("");
@@ -39,21 +40,13 @@ const AddCommitteeModal = () => {
   }
 
   return (
-    <div
-      className="modal fade"
-      id="addCommitteeModal"
-      tabIndex="-1"
-      aria-hidden="true">
+    <div className="modal fade" id="addCommitteeModal" tabIndex="-1" aria-hidden="true">
       <div className="modal-dialog modal-xl">
         <form onSubmit={onSubmitHandler}>
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">Add New Committee</h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"></button>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
               <div className="mb-3">
@@ -70,10 +63,13 @@ const AddCommitteeModal = () => {
               </div>
               <div className="mb-3">
                 <label className="form-label">Description</label>
-                <ReactQuill
-                  theme="snow"
-                  value={description}
-                  onChange={setDescription}
+                <CKEditor
+                  editor={ClassicEditor}
+                  data={description}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setDescription(data);
+                  }}
                 />
               </div>
               <div className="mb-3">
@@ -89,11 +85,7 @@ const AddCommitteeModal = () => {
               </div>
             </div>
             <div className="modal-footer">
-              <button
-                ref={closeRef}
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal">
+              <button ref={closeRef} type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                 Close
               </button>
               <button type="submit" className="btn btn-primary">
