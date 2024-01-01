@@ -113,6 +113,11 @@ const AddMeetingModal = () => {
                   }}
                 />
               </div>
+              <div className="mb-3">
+                <p>
+                  <span>*&nbsp;</span>If none selected, all members belong to this committee will be invited
+                </p>
+              </div>
             </div>
             <div className="modal-footer">
               <button ref={closeRef} type="button" className="btn btn-secondary" data-bs-dismiss="modal">

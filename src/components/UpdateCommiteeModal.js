@@ -1,14 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useDispatch } from "react-redux";
-import {
-  updateCommitteeAction,
-  resetGetUpdateCommitteeAction,
-} from "../redux/actions/committeeActions";
+import { updateCommitteeAction, resetGetUpdateCommitteeAction } from "../redux/actions/committeeActions";
 import { useSelector } from "react-redux";
 import Select from "react-select";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const UpdateCommiteeModal = () => {
   const [title, setTitle] = useState("");
@@ -17,12 +15,8 @@ const UpdateCommiteeModal = () => {
 
   const dispatch = useDispatch();
 
-  const { updateCommittee } = useSelector(
-    (state) => state.getUpdateCommitteeReducer
-  );
-  const { updatedCommittee } = useSelector(
-    (state) => state.updateCommitteeReducer
-  );
+  const { updateCommittee } = useSelector((state) => state.getUpdateCommitteeReducer);
+  const { updatedCommittee } = useSelector((state) => state.updateCommitteeReducer);
   const { members } = useSelector((state) => state.AllMembersReducer);
 
   const closeRef = useRef();
@@ -34,15 +28,7 @@ const UpdateCommiteeModal = () => {
     if (member === updateCommittee?.member) {
       setMember(updateCommittee?.member);
     }
-    dispatch(
-      updateCommitteeAction(
-        departmentId,
-        updateCommittee?.id,
-        title,
-        description,
-        member
-      )
-    );
+    dispatch(updateCommitteeAction(departmentId, updateCommittee?.id, title, description, member));
   };
 
   useEffect(() => {
@@ -65,11 +51,7 @@ const UpdateCommiteeModal = () => {
   }, [updateCommittee, members]);
 
   return (
-    <div
-      className="modal fade"
-      id="updateCommitteeModal"
-      tabIndex="-1"
-      aria-hidden="true">
+    <div className="modal fade" id="updateCommitteeModal" tabIndex="-1" aria-hidden="true">
       <div className="modal-dialog modal-xl">
         <form onSubmit={onSubmitHandler}>
           <div className="modal-content">
@@ -99,11 +81,16 @@ const UpdateCommiteeModal = () => {
               </div>
               <div className="mb-3">
                 <label className="form-label">Description</label>
-                <ReactQuill
-                  theme="snow"
-                  value={description}
-                  onChange={setDescription}
-                />
+                {description && (
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={description}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setDescription(data);
+                    }}
+                  />
+                )}
               </div>
 
               <div className="mb-3">
@@ -112,11 +99,7 @@ const UpdateCommiteeModal = () => {
                   <Select
                     defaultValue={() => {
                       let arr = [];
-                      for (
-                        let i = 0;
-                        i < updateCommittee?.member?.length;
-                        i++
-                      ) {
+                      for (let i = 0; i < updateCommittee?.member?.length; i++) {
                         for (let j = 0; j < members?.length; j++) {
                           if (updateCommittee?.member[i] === members[j]?.id) {
                             arr.push({

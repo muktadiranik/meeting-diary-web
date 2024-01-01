@@ -1,16 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
-import ReactQuill from "react-quill";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllMembersAction } from "../redux/actions/memberActions";
 import { useParams } from "react-router-dom";
-import {
-  updateMeetingAction,
-  resetGetUpdateMeetingAction,
-} from "../redux/actions/meetingActions";
+import { updateMeetingAction, resetGetUpdateMeetingAction } from "../redux/actions/meetingActions";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import moment from "moment";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const UpdateMeetingModal = () => {
   const [title, setTitle] = useState("");
@@ -25,9 +23,7 @@ const UpdateMeetingModal = () => {
 
   const { members } = useSelector((state) => state.AllMembersReducer);
   const { updatedMeeting } = useSelector((state) => state.updateMeetingReducer);
-  const { updateMeeting } = useSelector(
-    (state) => state.getUpdateMeetingReducer
-  );
+  const { updateMeeting } = useSelector((state) => state.getUpdateMeetingReducer);
 
   useEffect(() => {
     if (updateMeeting) {
@@ -53,18 +49,7 @@ const UpdateMeetingModal = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      updateMeetingAction(
-        departmentId,
-        committeeId,
-        updateMeeting?.id,
-        title,
-        description,
-        content,
-        meetingTime,
-        invitedMember
-      )
-    );
+    dispatch(updateMeetingAction(departmentId, committeeId, updateMeeting?.id, title, description, content, meetingTime, invitedMember));
   };
 
   useEffect(() => {
@@ -79,11 +64,7 @@ const UpdateMeetingModal = () => {
   }, [updatedMeeting]);
 
   return (
-    <div
-      className="modal fade"
-      id="updateMeetingModal"
-      tabIndex="-1"
-      aria-hidden="true">
+    <div className="modal fade" id="updateMeetingModal" tabIndex="-1" aria-hidden="true">
       <div className="modal-dialog modal-xl">
         <form onSubmit={onSubmitHandler}>
           <div className="modal-content">
@@ -112,19 +93,29 @@ const UpdateMeetingModal = () => {
               </div>
               <div className="mb-3">
                 <label className="form-label">Description</label>
-                <ReactQuill
-                  theme="snow"
-                  value={description}
-                  onChange={setDescription}
-                />
+                {description && (
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={description}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setDescription(data);
+                    }}
+                  />
+                )}
               </div>
               <div className="mb-3">
                 <label className="form-label">Content</label>
-                <ReactQuill
-                  theme="snow"
-                  value={content}
-                  onChange={setContent}
-                />
+                {content && (
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={content}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setContent(data);
+                    }}
+                  />
+                )}
               </div>
               {updateMeeting?.meeting_time && (
                 <div className="mb-3">
@@ -143,15 +134,9 @@ const UpdateMeetingModal = () => {
                   <Select
                     defaultValue={() => {
                       let arr = [];
-                      for (
-                        let i = 0;
-                        i < updateMeeting?.invited_member?.length;
-                        i++
-                      ) {
+                      for (let i = 0; i < updateMeeting?.invited_member?.length; i++) {
                         for (let j = 0; j < members?.length; j++) {
-                          if (
-                            updateMeeting?.invited_member[i] === members[j]?.id
-                          ) {
+                          if (updateMeeting?.invited_member[i] === members[j]?.id) {
                             arr.push({
                               value: members[j]?.id,
                               label: members[j]?.full_name,
